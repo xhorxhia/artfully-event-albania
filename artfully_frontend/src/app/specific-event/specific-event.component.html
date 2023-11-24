@@ -1,0 +1,47 @@
+<div fxLayout="row" fxLayoutAlign="center center">
+    <mat-label>{{event?.name}}</mat-label>
+</div>
+<br><br><br><br><br>
+
+<div class="container">
+    <div fxLayout="row" fxLayoutAlign="center">
+        <div fxLayoutAlign="row">
+
+            <!-- SLIDES -->
+            <carousel [objectFit]="'cover'" [cellWidth]="'100%'" [height]="300" [dots]="false" [loop]="true"
+                [width]="900" [cellsToShow]=3 [cellsToScroll]=1 [overflowCellsLimit]=1 [pauseOnHover]="true"
+                [borderRadius]=30 style="z-index: 1; height:600px; width:1800px;">
+
+                <div class="carousel-cell" style="background-color:  rgb(179, 179, 179);">
+                    <img src="../../assets/logos/email.png">
+                </div>
+                <div class="carousel-cell" style="background-color:   rgb(255, 188, 5);">
+                    <img src="../../assets/logos/email.png">
+                </div>
+                <div class="carousel-cell" style="background-color:   rgb(179, 179, 179);">
+                    <img src="../../assets/logos/email.png">
+                </div>
+                <div class="carousel-cell" style="background-color:  rgb(255, 188, 5);">
+                    <img src="../../assets/logos/email.png">
+                </div>
+
+            </carousel>
+
+        </div>
+    </div>
+
+    <br><br><br><br><br>
+
+    <!-- TEXT -->
+    <div fxLayout="row" fxLayoutAlign="center">
+       <p>{{event?.text}}</p>
+    </div>
+
+    <br><br><br><br><br>
+
+    <!-- REVIEWS -->
+    <div fxLayout="row" fxLayoutAlign="center">
+       <app-comment-section [event]="event"></app-comment-section> <!-- i jap id e eventit-->
+    </div>
+
+</div>

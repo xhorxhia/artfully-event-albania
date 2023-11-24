@@ -1,0 +1,79 @@
+<div style="width: 100%;">
+  
+    <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="space-between center">
+      
+        <div fxFlexFill fxFlex="50" class="div1">
+            <img src="../../assets/images/ddd2.png" >
+            <button mat-button class="text" (click)="goToPage('dasma-konfeta')">Dasma</button>
+        </div>             
+        
+        <div fxFlexFill fxFlex="50" class="div1">
+            <img src="../../assets/images/pgg2.png">
+            <button mat-button class="text" (click)="goToPage('pagezime-konfeta')">Pagezime</button>
+        </div>
+
+    </div>
+
+    <div *ngIf="loggedUser?.role=='admin'" class="grid-item" style="margin-top: 10%; margin-left: 5%;">
+        <button mat-icon-button (click)="openAddModal(addEvent); stopPropagation($event)">
+            <mat-icon>add_circle</mat-icon>
+        </button><p>Shto event</p>
+    </div>
+
+</div> 
+
+
+
+<!-- ADD -->
+<ng-template #addEvent>
+    <div fxLayout="row" fxLayoutAlign="space-between center" class="modalHeader"
+        style="font-size: 17px; font-weight: 600; font-family: Proxima Nova; margin: 10px;">
+        <div fxFlex="50">Shto nje event te ri</div>
+        <div fxFlex="50">
+            <button (click)="closeDialog()" style="float:right" mat-icon-button color="primary">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+    </div>
+    <br>
+
+    <form ngNativeValidate [formGroup]="addGeneralEventForm" (ngSubmit)="createRequest(addGeneralEventForm.value)"
+        (keydown.enter)="$event.preventDefault()">
+        
+        <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="space-between center">
+            <div fxFlexFill fxFlex="50">
+                <mat-form-field style="width: 100%">
+                    <mat-label>Titulli</mat-label>
+                    <input matInput required formControlName="name" type="text"
+                        placeholder="Titulli">
+                </mat-form-field>
+            </div>
+            <div fxFlexFill fxFlex="50">
+                <mat-form-field style="width: 100%">
+                    <mat-label>Kategoria e eventit</mat-label>
+                    <mat-select formControlName="category">
+                        <mat-option *ngFor="let cat of eventCategory" [value]="cat">
+                          {{cat}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <br>
+        <div >
+            <mat-form-field style="width: 100%">
+                <mat-label>Tekst</mat-label>
+                <textarea matInput formControlName="text"></textarea>
+            </mat-form-field>
+        </div>
+        <br>
+        <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="space-between center">
+            <div fxFlexFill fxFlex="100">
+                <button mat-flat-button color="primary" type="submit" style="float: right">Ruaj</button>
+            </div>
+        </div>
+
+    </form>
+
+</ng-template>
+

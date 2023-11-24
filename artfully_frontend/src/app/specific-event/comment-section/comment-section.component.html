@@ -1,0 +1,24 @@
+<div style="width: 100%;">
+    <div class="review-show">
+        <h1>Komente</h1>
+        <div *ngFor="let com of commentsList">
+            <div fxLayout="row" fxLayoutAlign="start">
+                <button *ngIf="loggedUser?.role=='admin'" mat-button (click)="openDeleteModal(com._id)">
+                      <mat-icon>delete</mat-icon>
+                </button>
+                <p style="margin-top: 9px;">&nbsp;&nbsp;&nbsp;&nbsp; {{com.description}} </p>
+            </div>           
+        </div>       
+    </div>
+
+    <div class="review-leave">
+        <h1>Ler nje koment</h1>
+        <mat-form-field style="width: 1180px;" >
+            <textarea matInput [(ngModel)]="itemValue"></textarea>
+        </mat-form-field>
+        <br>
+        <button mat-button (click)="saveComment(itemValue)">
+            Ruaj komentin
+        </button>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+.full-container {
+    background-color: rgba(241, 229, 215, 0.253);
+    height: 860px ;
+}
+
+.container {
+    position: relative;
+    text-align: center;  
+}
+
+.text {
+    position: absolute;
+    top: 360px;
+    left: -8px;
+    width: 100%;
+    color: #fff9dd;
+    font-size: 43px;
+    font-family: revert;
+    transition: font-size 0.5s;
+}
+
+.container:hover .text {
+    font-size: 100px; 
+}

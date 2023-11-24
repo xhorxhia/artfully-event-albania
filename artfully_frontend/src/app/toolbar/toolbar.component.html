@@ -1,0 +1,38 @@
+<mat-toolbar class="custom-toolbar">
+    
+    <img  class="images" src="../../assets/logos/logo1.png" height="100px" width="90px"/>
+   
+    <span>&nbsp;{{title | uppercase}}</span>
+    <span class="example-spacer"></span>
+    <button mat-button (click)="goToPage('kreu')">Kreu</button>
+    <button mat-button (click)="goToPage('evente')">Evente</button>
+    <button mat-button (click)="goToPage('konfeta')">Konfeta</button>
+    <button mat-button (click)="goToPage('kontakt')">Kontakt</button>
+
+    <button mat-icon-button
+            *ngIf="loginState"
+            class="text-light"
+            matTooltipPosition="below"
+            routerLink="/myprofile">
+      <mat-icon>person</mat-icon>
+    </button>
+    <span class="text-light">Mireserdhe {{userName}}</span>
+    <button mat-icon-button
+            *ngIf="!loginState"
+            (click)="auth_btnClicked()"
+            routerLink="/login"
+            class="text-light"
+            matTooltip="Login"
+            matTooltipPosition="below">
+      <mat-icon>login</mat-icon>
+    </button>
+    <button mat-icon-button
+            *ngIf="loginState"
+            (click)="auth_btnClicked()"
+            class="text-light"
+            matTooltip="Logout"
+            matTooltipPosition="below">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </mat-toolbar>
+  

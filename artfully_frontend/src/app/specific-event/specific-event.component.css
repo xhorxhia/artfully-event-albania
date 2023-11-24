@@ -1,0 +1,7 @@
+
+.carousel-container {
+    display: flex;
+    flex-direction: row; /* Horizontal layout */
+    overflow-x: hidden;    /* Enable horizontal scrolling if necessary */
+    /* Add any other styling as needed */
+}

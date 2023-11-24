@@ -1,0 +1,32 @@
+#container-form{
+    width: 30%;
+    height: 70%;
+    margin-left: 30%;
+    margin-top: 4%;
+    border: 3px solid black;
+    padding-left: 9%;
+}
+
+#title-login-form{
+    color: rgba(131, 126, 126, 0.756);
+}
+
+.mat-form-field {
+    width: 55%;
+}
+
+#login-button{
+    color: rgba(96, 94, 94, 0.756);
+}
+
+input::-ms-reveal, input::-ms-clear {
+        display: none;
+}
+
+#sign-up-form{
+    width: 50%;
+}
+
+.mat-error{
+  color: #1976d2;
+}
