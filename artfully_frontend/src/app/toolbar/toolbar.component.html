@@ -13,10 +13,10 @@
             *ngIf="loginState"
             class="text-light"
             matTooltipPosition="below"
-            routerLink="/myprofile">
+           > <!-- routerLink="/myprofile"-->
       <mat-icon>person</mat-icon>
     </button>
-    <span class="text-light">Mireserdhe {{userName}}</span>
+    <span *ngIf="loginState" class="text-light">Mireserdhe {{userName}}</span>
     <button mat-icon-button
             *ngIf="!loginState"
             (click)="auth_btnClicked()"

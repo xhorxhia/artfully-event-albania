@@ -2,15 +2,15 @@
     <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="space-around center" style="margin-top: 5%;">
 
         <div fxFlexFill fxFlex="20" class="div1">
-            <img src="../../assets/images/dd1.png" style="height:413px; width: 380px">
+            <img src="../../assets/images/dd1.png">
             <div><button mat-button class="text" (click)="goToPage('dasma')">Dasma</button></div>
         </div>
         <div fxFlexFill fxFlex="20" class="div1">
-            <img src="../../assets/images/pg1.png" style="height:413px; width: 380px">
+            <img src="../../assets/images/pg1.png">
             <div><button mat-button class="text" (click)="goToPage('pagezime')">Pagezime</button></div>
         </div>
         <div fxFlexFill fxFlex="20" class="div1">
-            <img src="../../assets/images/dtl1.png" style="height:413px; width: 380px">
+            <img src="../../assets/images/dtl1.png">
             <div><button mat-button class="text" (click)="goToPage('ditelindje')">Ditelindje</button></div>
         </div>
     </div>
@@ -18,12 +18,12 @@
     <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="space-between center" style="margin-left: 23%;padding-top: 5%;">
 
         <div fxFlexFill fxFlex="20" class="div1">
-            <img src="../../assets/images/fej1.png" style="height:413px; width: 380px">
+            <img src="../../assets/images/fej1.png">
             <div><button mat-button class="text1" (click)="goToPage('fejesa')">Fejesa</button></div>
         </div>
 
         <div fxFlexFill fxFlex="20" class="div1">
-            <img src="../../assets/images/tj.png" style="height:413px; width: 380px">
+            <img src="../../assets/images/tj.png">
             <div><button mat-button class="text1" (click)="goToPage('te tjera')">Te tjera</button></div>
         </div>
         <div fxFlexFill fxFlex="20">
@@ -79,6 +79,18 @@
                 <mat-label>Tekst</mat-label>
                 <textarea matInput formControlName="text"></textarea>
             </mat-form-field>
+        </div>
+        <br>
+        <div>
+            <mat-label>Fotoja e coverit</mat-label>
+            <input formControlName="profileImgUrl" #fileInput type="file" (change)="handleProfileImageInput($event)"
+                accept="image/*">
+        </div>
+        <br>
+        <div>
+            <mat-label>Fotot per eventin</mat-label>
+            <input formControlName="eventImages" type="file" #fileInput multiple (change)="handleMultipleImageInput($event)"
+                accept="image/*">
         </div>
         <br>
         <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="space-between center">

@@ -17,6 +17,8 @@ export class EventsComponent implements OnInit{
  newEvent: any = {};
  eventCategory = ['dasme', 'pagezime', 'ditelindje', 'fejesa', 'teTjera'];
  loggedUser: any;
+ fileToUpload: File | null = null;
+ imagesToUpload: any  = [];
 
   constructor(private router: Router,
               private eventService: EventService,
@@ -27,7 +29,9 @@ export class EventsComponent implements OnInit{
                 this.addGeneralEventForm = fb.group({
                   'name': [null, Validators.required],
                   'text': [null, Validators.required],
-                  'category': [null, Validators.required]
+                  'category': [null, Validators.required],
+                  'profileImgUrl': [null],
+                  'eventImages': []
                 });
               }
 
@@ -90,19 +94,74 @@ export class EventsComponent implements OnInit{
     });
   }
 
-  createRequest(post: any){
+  async createRequest(post: any){
     this.newEvent.name = post.name;
     this.newEvent.text = post?.text;
     this.newEvent.type = 'event';
     this.newEvent.category = post.category;
-   console.log(this.newEvent);
-   
-  this.eventsService.addNewEvent(this.newEvent).subscribe(resp =>{
+       
+    const formData = new FormData();
+    formData.append('name', this.newEvent.name);    
+    formData.append('text', this.newEvent.text);
+    formData.append('type', this.newEvent.type);
+    formData.append('category', this.newEvent.category);
+    
+    if (this.fileToUpload && this.imagesToUpload) {
+      formData.append('image', this.fileToUpload); // cover image
 
-  });
+      for (let i = 0; i < this.imagesToUpload.length; i++) {      
+        formData.append('eventImages[]', this.imagesToUpload[i]);
+      }
+      
+      for (const pair of Object.entries(formData)) {
+        console.log(pair[0] + ', ' + pair[1]);
+      }
+       
+      try {
+        this.eventsService.addNewEvent(formData).subscribe(resp =>{
+
+        });
+      } catch (error) {
+          console.error("Error adding file")
+      }
+    } else {
+      console.error('No file selected');
+    }
+
+   console.log(this.newEvent);
 
     this.addGeneralEventForm.reset();
     this.dialogRef.close();
   }
+
+  handleMultipleImageInput(event: any) {    
+    this.imagesToUpload = [];
+
+    if (event?.target?.files) {
+      const files: FileList = event.target.files;
+      this.imagesToUpload = files;
+      console.log(this.imagesToUpload, "EVENT");
+    }
+    else {
+      console.error('No images selected');
+    }    
+  }
+
+  // images upload
+  handleProfileImageInput(event: any) {   
+    this.fileToUpload = null
+
+    if (event?.target?.files) {
+      const fileList: FileList = event.target.files;
+
+      this.fileToUpload = fileList[0]; 
+      //this.fileToUpload = event.target.files;
+      console.log(this.fileToUpload, "filee");
+      
+    } else {
+      console.error('No profile picture selected');
+    } 
+  }
+
 
 }

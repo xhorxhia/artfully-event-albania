@@ -22,7 +22,7 @@
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
-import { HydratedDocument } from 'mongoose';
+import mongoose, { HydratedDocument } from 'mongoose';
 import { Comment } from './comment.schema';
 export type GeneralEventDocument = HydratedDocument<GeneralEvent>;
 export declare class GeneralEvent {
@@ -31,9 +31,11 @@ export declare class GeneralEvent {
     type: string;
     category: string;
     comments: Comment[];
+    imageFile: string;
+    imagesArray: string[];
 }
-export declare const GeneralEventSchema: import("mongoose").Schema<GeneralEvent, import("mongoose").Model<GeneralEvent, any, any, any, import("mongoose").Document<unknown, any, GeneralEvent> & GeneralEvent & {
-    _id: import("mongoose").Types.ObjectId;
-}, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, GeneralEvent, import("mongoose").Document<unknown, {}, GeneralEvent> & GeneralEvent & {
-    _id: import("mongoose").Types.ObjectId;
+export declare const GeneralEventSchema: mongoose.Schema<GeneralEvent, mongoose.Model<GeneralEvent, any, any, any, mongoose.Document<unknown, any, GeneralEvent> & GeneralEvent & {
+    _id: mongoose.Types.ObjectId;
+}, any>, {}, {}, {}, {}, mongoose.DefaultSchemaOptions, GeneralEvent, mongoose.Document<unknown, {}, mongoose.FlatRecord<GeneralEvent>> & mongoose.FlatRecord<GeneralEvent> & {
+    _id: mongoose.Types.ObjectId;
 }>;

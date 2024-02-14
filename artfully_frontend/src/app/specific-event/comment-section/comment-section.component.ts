@@ -45,6 +45,10 @@ export class CommentSectionComponent implements OnInit, OnChanges {
 
     this.service.getEventById(this.event._id).subscribe((res:any) => {
       this.event = res.event;
+     
+      this.commentsList = this.commentsList.filter(com => com.id !== id);
+      console.log(this.commentsList
+        );
       EventService.emitSpecificEvent(this.event);
     })  
   }

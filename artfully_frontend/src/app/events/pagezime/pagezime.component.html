@@ -1,12 +1,14 @@
 <div class="grid-container">
     <div *ngFor="let item of eventsList.event" class="grid-item">
-        
+        <img [src]="profileImgMap.get(item._id)" class="image-responsive"
+        style="height:413px; width: calc(99%); max-width: 100%; padding-left: 3px;">
+
        <div>
            {{item.name}}
        </div> 
 
         <div fxLayout="row" fxLayoutAlign="end end" >
-           <button *ngIf="loggedUser?.role=='admin'" mat-button (click)="openEditModal(editEventTemplate, item); stopPropagation($event)">
+           <button *ngIf="loggedUser?.role=='admin'" mat-button (click)="openEditModal(item); stopPropagation($event)">
                <mat-icon>edit</mat-icon>
            </button>
            <button *ngIf="loggedUser?.role=='admin'"  mat-button (click)="openDeleteModal(item._id)">
@@ -21,56 +23,3 @@
     
 </div>
 
-
-<!-- EDIT -->
-<ng-template #editEventTemplate>
-    <div fxLayout="row" fxLayoutAlign="space-between center" class="modalHeader"
-        style="font-size: 17px; font-weight: 600; font-family: Proxima Nova; margin: 10px;">
-        <div fxFlex="50">Ndrysho eventin</div>
-        <div fxFlex="50">
-            <button (click)="closeDialog()" style="float:right" mat-icon-button color="primary">
-                <mat-icon>close</mat-icon>
-            </button>
-        </div>
-    </div>
-    <br>
-
-    <form ngNativeValidate [formGroup]="editEventForm" (ngSubmit)="editEvent(editEventForm.value, toBeEdited)"
-        (keydown.enter)="$event.preventDefault()">
-        
-        <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="space-between center">
-            <div fxFlexFill fxFlex="50">
-                <mat-form-field style="width: 100%">
-                    <mat-label>Titulli</mat-label>
-                    <input matInput required formControlName="name" type="text"
-                        placeholder="Titulli">
-                </mat-form-field>
-            </div>
-            <div fxFlexFill fxFlex="50">
-                <mat-form-field style="width: 100%">
-                    <mat-label>Kategoria e eventit</mat-label>
-                    <mat-select formControlName="category">
-                        <mat-option *ngFor="let cat of eventCategory" [value]="cat">
-                          {{cat}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-        </div>
-        <br>
-        <div >
-            <mat-form-field style="width: 100%">
-                <mat-label>Tekst</mat-label>
-                <textarea matInput formControlName="text"></textarea>
-            </mat-form-field>
-        </div>
-        <br>
-        <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="space-between center">
-            <div fxFlexFill fxFlex="100">
-                <button mat-flat-button color="primary" type="submit" style="float: right">Ruaj</button>
-            </div>
-        </div>
-
-    </form>
-
-</ng-template>

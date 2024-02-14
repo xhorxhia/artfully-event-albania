@@ -10,21 +10,19 @@
             <!-- SLIDES -->
             <carousel [objectFit]="'cover'" [cellWidth]="'100%'" [height]="300" [dots]="false" [loop]="true"
                 [width]="900" [cellsToShow]=3 [cellsToScroll]=1 [overflowCellsLimit]=1 [pauseOnHover]="true"
-                [borderRadius]=30 style="z-index: 1; height:600px; width:1800px;">
+                [borderRadius]=30 style="z-index: 1; height:600px; width:1600px;">
 
-                <div class="carousel-cell" style="background-color:  rgb(179, 179, 179);">
-                    <img src="../../assets/logos/email.png">
+                <div class="carousel-cell" *ngFor="let entry of imagesArrayMap | keyvalue">
+                    <img [src]="entry.value">
+        
+                    <div  style="position: absolute; bottom: 0; right: 0;z-index: 2;">  
+                        <button *ngIf="loggedUser?.role=='admin'" mat-button (click)="openDeleteModal(entry.key)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
+                
                 </div>
-                <div class="carousel-cell" style="background-color:   rgb(255, 188, 5);">
-                    <img src="../../assets/logos/email.png">
-                </div>
-                <div class="carousel-cell" style="background-color:   rgb(179, 179, 179);">
-                    <img src="../../assets/logos/email.png">
-                </div>
-                <div class="carousel-cell" style="background-color:  rgb(255, 188, 5);">
-                    <img src="../../assets/logos/email.png">
-                </div>
-
+                
             </carousel>
 
         </div>

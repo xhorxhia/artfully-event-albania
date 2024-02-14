@@ -15,17 +15,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GeneralEventController = void 0;
 const common_1 = require("@nestjs/common");
 const generalEvent_schema_1 = require("../schemas/generalEvent.schema");
-const generalEvent_dto_1 = require("./generalEvent.dto");
 const generalEvent_service_1 = require("./generalEvent.service");
+const platform_express_1 = require("@nestjs/platform-express");
 let GeneralEventController = class GeneralEventController {
     constructor(generalEventService) {
         this.generalEventService = generalEventService;
     }
-    async createProduct(response, event) {
-        const newEvent = await this.generalEventService.create(event);
-        return response.status(common_1.HttpStatus.CREATED).json({
-            newEvent
-        });
+    async createEvent(response, event, imagesArray) {
+        try {
+            const newEvent = await this.generalEventService.create(event, imagesArray);
+            return response.status(common_1.HttpStatus.CREATED).json({
+                newEvent
+            });
+        }
+        catch (error) {
+            return { error: 'Failed to process files' };
+        }
     }
     async fetchAll(response) {
         const events = await this.generalEventService.findAll();
@@ -33,11 +38,32 @@ let GeneralEventController = class GeneralEventController {
             events
         });
     }
-    async findById(response, id) {
+    async findEventById(response, id) {
         const event = await this.generalEventService.readById(id);
         return response.status(common_1.HttpStatus.OK).json({
             event
         });
+    }
+    async findImageById(response, id) {
+        const imageStream = await this.generalEventService.getFileStreamById(id);
+        if (!imageStream) {
+            return response.status(404).send('Image not found');
+        }
+        const contentType = this.getContentType(id);
+        response.set('Content-Type', contentType);
+        imageStream.pipe(response);
+    }
+    getContentType(filename) {
+        const extension = filename.split('.').pop()?.toLowerCase();
+        switch (extension) {
+            case 'jpeg':
+            case 'jpg':
+                return 'image/jpeg';
+            case 'png':
+                return 'image/png';
+            default:
+                return null;
+        }
     }
     async findBytypeAndCategory(response, type, category) {
         const event = await this.generalEventService.findByTypeAndCategory(type, category);
@@ -45,11 +71,16 @@ let GeneralEventController = class GeneralEventController {
             event
         });
     }
-    async update(response, id, event) {
-        const updatedEvent = await this.generalEventService.update(id, event);
-        return response.status(common_1.HttpStatus.OK).json({
-            updatedEvent
-        });
+    async update(response, id, event, imagesArray) {
+        try {
+            const updatedEvent = await this.generalEventService.update(id, event, imagesArray);
+            return response.status(common_1.HttpStatus.OK).json({
+                updatedEvent
+            });
+        }
+        catch (error) {
+            return { error: 'Failed to process files' };
+        }
     }
     async delete(response, id) {
         const deletedEvent = await this.generalEventService.delete(id);
@@ -63,6 +94,12 @@ let GeneralEventController = class GeneralEventController {
             deletedComment
         });
     }
+    async deleteImageFromEvent(response, imageId, eventId) {
+        const deletedImage = this.generalEventService.deleteImageFromEvent(imageId, eventId);
+        return response.status(common_1.HttpStatus.OK).json({
+            deletedImage
+        });
+    }
     async addComment(response, eventId, comment) {
         const comments = this.generalEventService.addComment(eventId, comment);
         return response.status(common_1.HttpStatus.OK).json({
@@ -73,12 +110,17 @@ let GeneralEventController = class GeneralEventController {
 exports.GeneralEventController = GeneralEventController;
 __decorate([
     (0, common_1.Post)('add'),
+    (0, common_1.UseInterceptors)((0, platform_express_1.FileFieldsInterceptor)([
+        { name: 'image', maxCount: 1 },
+        { name: 'eventImages[]' },
+    ])),
     __param(0, (0, common_1.Res)()),
     __param(1, (0, common_1.Body)()),
+    __param(2, (0, common_1.UploadedFiles)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, generalEvent_dto_1.GeneralEventDto]),
+    __metadata("design:paramtypes", [Object, Object, Array]),
     __metadata("design:returntype", Promise)
-], GeneralEventController.prototype, "createProduct", null);
+], GeneralEventController.prototype, "createEvent", null);
 __decorate([
     (0, common_1.Get)('getAll'),
     __param(0, (0, common_1.Res)()),
@@ -93,7 +135,15 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
-], GeneralEventController.prototype, "findById", null);
+], GeneralEventController.prototype, "findEventById", null);
+__decorate([
+    (0, common_1.Get)('image/:id'),
+    __param(0, (0, common_1.Res)()),
+    __param(1, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], GeneralEventController.prototype, "findImageById", null);
 __decorate([
     (0, common_1.Get)(':type/:category'),
     __param(0, (0, common_1.Res)()),
@@ -105,11 +155,16 @@ __decorate([
 ], GeneralEventController.prototype, "findBytypeAndCategory", null);
 __decorate([
     (0, common_1.Put)(':id'),
+    (0, common_1.UseInterceptors)((0, platform_express_1.FileFieldsInterceptor)([
+        { name: 'image', maxCount: 1 },
+        { name: 'eventImages[]' },
+    ])),
     __param(0, (0, common_1.Res)()),
     __param(1, (0, common_1.Param)('id')),
     __param(2, (0, common_1.Body)()),
+    __param(3, (0, common_1.UploadedFiles)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object, generalEvent_schema_1.GeneralEvent]),
+    __metadata("design:paramtypes", [Object, Object, generalEvent_schema_1.GeneralEvent, Array]),
     __metadata("design:returntype", Promise)
 ], GeneralEventController.prototype, "update", null);
 __decorate([
@@ -129,6 +184,15 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object, Object]),
     __metadata("design:returntype", Promise)
 ], GeneralEventController.prototype, "deleteComment", null);
+__decorate([
+    (0, common_1.Delete)('deleteImage/:imageId/event/:eventId'),
+    __param(0, (0, common_1.Res)()),
+    __param(1, (0, common_1.Param)('imageId')),
+    __param(2, (0, common_1.Param)('eventId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object, Object]),
+    __metadata("design:returntype", Promise)
+], GeneralEventController.prototype, "deleteImageFromEvent", null);
 __decorate([
     (0, common_1.Post)(':eventId/addComments'),
     __param(0, (0, common_1.Res)()),

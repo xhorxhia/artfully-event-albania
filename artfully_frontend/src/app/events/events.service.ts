@@ -20,16 +20,25 @@ export class EventsService {
         return this.http.get(`${this.baseUrl}/`+ type  + '/' + category);
     }
 
-    addNewEvent(event: any){
+    addNewEvent(event: FormData){
         return this.http.post(`${this.baseUrl}/`+ 'add', event);
     }
 
-    updateEvent(id: string,event: any){
+    getImage(id:string){
+        return this.http.get(`${this.baseUrl}/` + 'image/' + id,
+        {responseType: 'arraybuffer'});
+    }
+
+    updateEvent(id: string,event: FormData){
         return this.http.put(`${this.baseUrl}/`+id, event);
     }
 
     deleteEvent(id: string){
         return this.http.delete(`${this.baseUrl}/`+id);
+    }
+
+    deleteImageFormEvent(imageId: string, eventId: string){
+        return this.http.delete(`${this.baseUrl}/`+ 'deleteImage/' + imageId + '/event/'+ eventId);
     }
 
     deleteComment(eventId: string, commentId: string){

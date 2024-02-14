@@ -38,3 +38,9 @@
 .div1:hover .text1 {
     font-size: 50px; 
 }
+
+img {
+    height:413px; 
+    width: 380px;
+    border-radius: 6px;
+}

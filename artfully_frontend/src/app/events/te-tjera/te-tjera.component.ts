@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ConfirmationDialog } from 'src/app/confirmation-dialog/confirmation-dialog.component';
 import { EventService } from 'src/event.service';
 import { EventsService } from '../events.service';
+import { EditEventModalComponent } from 'src/app/shared/edit-event-modal/edit-event-modal.component';
 
 @Component({
   selector: 'app-te-tjera',
@@ -14,23 +15,19 @@ import { EventsService } from '../events.service';
 export class TeTjeraComponent {
 
   eventsList: any = [];
-  editEventForm : FormGroup;
   dialogRef: any;
   toBeEdited: any;
   eventCategory = ['dasme', 'pagezime', 'ditelindje', 'fejesa', 'teTjera'];
   loggedUser: any;
+  profileImgMap = new Map();
+  fileToUpload: File | null = null;
+  imagesToUpload: any  = [];
   
   constructor(private eventsService: EventsService,
-              private eventService: EventService,
               private dialog: MatDialog,
               private fb: FormBuilder,
               private router: Router){  
-                
-                this.editEventForm = fb.group({
-                  'name': [null, Validators.required],
-                  'text': [null, Validators.required],
-                  'category': [null, Validators.required]
-                });
+              
               }
 
   ngOnInit(){
@@ -40,7 +37,28 @@ export class TeTjeraComponent {
 
   getAllTjera(){
     this.eventsService.getSpecificEvents('event', 'fejesa').subscribe(data => {
-      this.eventsList = data;   
+      this.eventsList = data;  
+      
+      this.eventsList.event.forEach((event: any)=>{
+        
+        if(event?.imageFile && event?.imageFile != null){
+          this.eventsService.getImage(event.imageFile).subscribe((data:any) => {
+            console.log(event);
+            
+              // Convert ArrayBuffer to base64 string
+              const blob = new Blob([data]);
+              const reader = new FileReader();
+              reader.onload = () => {
+              this.profileImgMap.set(event._id,reader.result);
+
+              };
+              reader.readAsDataURL(blob);
+            },
+            (error) => {
+              console.error('Error fetching image:', error);
+            })
+        }
+      })
     });
   }
 
@@ -49,27 +67,28 @@ export class TeTjeraComponent {
     event.preventDefault();
   } 
 
-  closeDialog() {
-    if (this.dialogRef != null) {
-        this.dialogRef.close();
-    }
-  }
-
-  openEditModal(templateReference: any, event:any){
-    this.dialogRef = this.dialog.open(templateReference, {
-      width: '800px',
-      disableClose: true
-    });
-
-    this.editEventForm.patchValue({
-      name: event.name,
-      text: event?.text,
-      category: event.category
-    });
-    
-    this.toBeEdited = event
-  }
-
+  openEditModal(event:any){
+    this.dialog.open(EditEventModalComponent, {
+     width: '800px',
+     data: {
+       item: event,
+       eventCategory: this.eventCategory,
+       eventsService: this.eventsService,
+       imagesToUpload: this.imagesToUpload,
+       fileToUpload: this.fileToUpload,
+       toBeEdited: this.toBeEdited,
+       editEventForm: this.fb.group({
+         name: [event.name, Validators.required],
+         text: [event.text],
+         category: [event.category, Validators.required],
+         profileImgUrl: [null],
+         eventImages: []
+       })
+     }
+   });
+   
+   this.toBeEdited = event;
+ }
   openDeleteModal(id: string) {
         const dialogRef = this.dialog.open(ConfirmationDialog,{
           data:{
@@ -87,24 +106,6 @@ export class TeTjeraComponent {
             this.deleteEvent(id)          
           }
         });
-      }
-
-
-  editEvent(post:any, oldE: any){
-    console.log(post, oldE);
-    oldE.name = post.name;
-    oldE.text = post.text;
-    oldE.category = post.category;
-
-    this.eventsService.updateEvent(oldE._id, oldE).subscribe(resp => {
-      this.resetEdit();
-      this.closeDialog();
-    
-    });
-  }
-
-  resetEdit(){
-    this.toBeEdited = null;
   }
 
   deleteEvent(id: string){

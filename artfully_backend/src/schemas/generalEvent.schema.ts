@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import mongoose, { HydratedDocument } from 'mongoose';
 import { Comment, CommentSchema } from './comment.schema';
 
 
@@ -20,7 +20,13 @@ export class GeneralEvent {
   category: string;
 
   @Prop({type: [CommentSchema]})
-  comments: Comment[]
+  comments: Comment[];
+
+  @Prop()
+  imageFile: string;
+
+  @Prop()
+  imagesArray: string[];
 
 }
 

@@ -19,11 +19,10 @@ export class EventService {
     }
 
     // specific event
-    static _specificEvent = new Subject();
+    static _specificEvent = new BehaviorSubject({});
 
     static emitSpecificEvent(data: any){
         console.log(data);
-        
         this._specificEvent.next(data);
     }
 

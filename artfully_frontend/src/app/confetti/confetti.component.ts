@@ -15,7 +15,7 @@ export class ConfettiComponent implements OnInit{
   dialogRef: any;
   addGeneralEventForm : FormGroup;
   newEvent: any = {};
-  eventCategory = ['dasme', 'pagezime'];
+  eventCategory = ['dasme', 'pagezime', 'fejesa'];
   loggedUser: any;
   
   constructor(private router: Router,
@@ -46,6 +46,11 @@ export class ConfettiComponent implements OnInit{
       case 'pagezime-konfeta':
         this.router.navigate(['pagezime-konfeta']);
         EventService.emitSelectedTitle('pagezime>konfeta');
+        break;
+        
+      case 'fejesa-konfeta':
+        this.router.navigate(['fejesa-konfeta']);
+        EventService.emitSelectedTitle('fejesa>konfeta');
         break;  
 
       default:  
@@ -82,9 +87,9 @@ export class ConfettiComponent implements OnInit{
     this.newEvent.category = post.category;
    console.log(this.newEvent);
    
-  this.eventsService.addNewEvent(this.newEvent).subscribe(resp =>{
+  // this.eventsService.addNewEvent(this.newEvent,null).subscribe(resp =>{
 
-  });
+  // });
 
     this.addGeneralEventForm.reset();
     this.dialogRef.close();

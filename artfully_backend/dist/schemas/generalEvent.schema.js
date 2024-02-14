@@ -35,6 +35,14 @@ __decorate([
     (0, mongoose_1.Prop)({ type: [comment_schema_1.CommentSchema] }),
     __metadata("design:type", Array)
 ], GeneralEvent.prototype, "comments", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], GeneralEvent.prototype, "imageFile", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", Array)
+], GeneralEvent.prototype, "imagesArray", void 0);
 exports.GeneralEvent = GeneralEvent = __decorate([
     (0, mongoose_1.Schema)()
 ], GeneralEvent);

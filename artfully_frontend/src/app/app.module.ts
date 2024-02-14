@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
@@ -13,7 +12,7 @@ import { EventsComponent } from './events/events.component';
 import { ConfettiComponent } from './confetti/confetti.component';
 import { ContactComponent } from './contact/contact.component';
 import { EventService } from 'src/event.service';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DasmaComponent } from './events/dasma/dasma.component';
 import { PagezimeComponent } from './events/pagezime/pagezime.component';
@@ -30,12 +29,14 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { ConfirmationDialog } from './confirmation-dialog/confirmation-dialog.component';
 import { SpecificEventComponent } from './specific-event/specific-event.component';
-import {IvyCarouselModule} from 'angular-responsive-carousel';
+import { IvyCarouselModule } from 'angular-responsive-carousel';
 import { CommentSectionComponent } from './specific-event/comment-section/comment-section.component';
 import { RegisterComponent } from './authentication/register/register.component';
 import { LoginComponent } from './authentication/login/login.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { FejesaKonfetaComponent } from './confetti/fejesa-konfeta/fejesa-konfeta.component';
+import { EditEventModalComponent } from './shared/edit-event-modal/edit-event-modal.component';
 
 
 
@@ -58,7 +59,11 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     SpecificEventComponent,
     CommentSectionComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    FejesaKonfetaComponent,
+    EditEventModalComponent,
+ 
+
     
   ],
   imports: [

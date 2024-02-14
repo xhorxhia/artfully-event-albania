@@ -17,6 +17,7 @@ const generalEvent_schema_1 = require("./schemas/generalEvent.schema");
 const user_controller_1 = require("./auth/user.controller");
 const user_service_1 = require("./auth/user.service");
 const user_schema_1 = require("./schemas/user.schema");
+const platform_express_1 = require("@nestjs/platform-express");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -26,7 +27,10 @@ exports.AppModule = AppModule = __decorate([
             mongoose_1.MongooseModule.forFeature([
                 { name: generalEvent_schema_1.GeneralEvent.name, schema: generalEvent_schema_1.GeneralEventSchema },
                 { name: user_schema_1.User.name, schema: user_schema_1.UserSchema }
-            ])],
+            ]),
+            platform_express_1.MulterModule.register({
+                dest: './uploads',
+            }),],
         controllers: [
             app_controller_1.AppController,
             generalEvent_controller_1.GeneralEventController,
