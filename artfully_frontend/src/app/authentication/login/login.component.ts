@@ -27,7 +27,6 @@ export class LoginComponent {
   constructor(private _toolbar: ToolbarService, 
               private _service: LoginService, 
               private _snackBar: MatSnackBar, 
-              // private _encryption: EncryptionPipe, 
               private passwordService: PasswordService,
               private _router: Router){}
 
@@ -38,41 +37,40 @@ export class LoginComponent {
     }
     else if(this.username.status == "INVALID" || this.password.status == "INVALID"){
       this._snackBar.open(ErrorMessage.InvalidAuthentificationFields, 'OK', this.promptConfig);
-    }
-    this._service.loginUser(
-      {
-        firstName: undefined,
-        lastName: undefined,
-        username: this.username.value === null ? undefined : this.username.value,
-        email: undefined,
-        password: this.password.value === null ? undefined :  this.passwordService.hashPassword(this.password.value) //this._encryption.transform(this.password.value)
-      })
-      .subscribe(
-      (res) => {
-        console.log(res);
-        
-        if(res.body?.errorFlag == true){
-          this._snackBar.open(res.body.reasoning, 'OK', this.promptConfig);
-        }
-        else{
-          this._toolbar.loggedInUser.next(
-            {
-              state: true,
-              userid: res.body?.userExists.id,
-              username: res.body?.userExists.username,
-              role: res.body?.userExists.role
-            }
-          );
+    } else {
+      this._service.loginUser(
+        {
+          firstName: undefined,
+          lastName: undefined,
+          username: this.username.value === null ? undefined : this.username.value,
+          email: undefined,
+          password: this.password.value === null ? undefined :  this.passwordService.hashPassword(this.password.value) //this._encryption.transform(this.password.value)
+        })
+        .subscribe(
+        (res) => {
+          console.log(res);
           
-          localStorage.setItem('events.loggedUser', JSON.stringify(res.body.userExists));
-          this._router.navigate(['/']);
-        }
-      },
-      (error) => {
-        if(error.status == 0){
-          this._snackBar.open(ErrorMessage.StatusZeroRequest, 'OK', this.promptConfig);
-        }
-      })
+          if(res.body?.errorFlag == true){
+            this._snackBar.open(res.body.reasoning, 'OK', this.promptConfig);
+          }
+          else{
+            this._toolbar.loggedInUser.next(
+              {
+                state: true,
+                userid: res.body?.userExists.id,
+                username: res.body?.userExists.username,
+                role: res.body?.userExists.role
+              }
+            );
+            
+            localStorage.setItem('events.loggedUser', JSON.stringify(res.body.userExists));
+            this._router.navigate(['/']);
+          }
+        },
+        (error) => {
+          this._snackBar.open('Login failed. Incorrect username or password.', 'OK', this.promptConfig);
+        });
+    }
   }
 
   goToRegister(){

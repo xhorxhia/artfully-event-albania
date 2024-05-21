@@ -28,8 +28,15 @@ export class ToolbarComponent implements OnInit{
       this.title = data;
     });
 
-   this.loggedUser = JSON.parse(localStorage.getItem('events.loggedUser') || '{}');
-   this.loggedUserFnc()
+    this.loadLoggedUser()
+  }
+
+  loadLoggedUser() {
+    this.loggedUser = JSON.parse(localStorage.getItem('events.loggedUser') || '{}');
+
+    this.loggedUser?.username ? this.loginState = true : this.loginState = false;
+
+    this.loggedUserFnc();
   }
 
 
@@ -63,27 +70,28 @@ export class ToolbarComponent implements OnInit{
     
   }
 
-  auth_btnClicked() {
-    this.router.navigate(['login']);
 
-    if (this.loginState == true) {
-      this._service.loggedInUser.next(
-        {
-          state: false,
-          userid: "",
-          username: "",
-          role: ""
-        }
-      );
-     
-    }
+  auth_btnClicked() {
     
+    if (this.loginState) {
+      // Perform logout actions
+      localStorage.removeItem('events.loggedUser');
+      this.loginState = false;
+      this.loadLoggedUser(); // Reload user data
+      this.router.navigate(['login']);
+
+    } else {
+
+      this.router.navigate(['login']);
+
+    }
   }
 
-  private loggedUserFnc() {
-    this._service.loggedInUser.next(
+  private loggedUserFnc() {  // used to initialize and update the auth state based on user's session data from localStorage 
+ 
+    this._service.loggedInUser.next(  // for refresh
       {
-        state: true,
+        state: this.loginState,
         userid: this.loggedUser?.id,
         username: this.loggedUser?.username,
         role: this.loggedUser?.role

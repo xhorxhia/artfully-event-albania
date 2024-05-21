@@ -19,6 +19,10 @@ __decorate([
     (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
 ], Comment.prototype, "description", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], Comment.prototype, "username", void 0);
 exports.Comment = Comment = __decorate([
     (0, mongoose_1.Schema)()
 ], Comment);

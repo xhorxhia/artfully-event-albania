@@ -7,6 +7,12 @@
   .grid-item {
     width: calc(25% - 20px); /* 25% of the container width minus margin/padding */
     margin: 10px; /* Adjust margin as needed */
-    background-color: #ccc; /* Add your desired styling */
+    background-color:  #d4c5b6; /* Add your desired styling */
     padding: 10px; /* Add padding as needed */
+  }
+
+  .name {
+    font-size: 30px;
+    color:  rgb(52, 38, 19);
+    font-weight: 500;
   }

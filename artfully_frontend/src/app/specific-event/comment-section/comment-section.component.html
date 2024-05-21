@@ -1,24 +1,63 @@
 <div style="width: 100%;">
-    <div class="review-show">
-        <h1>Komente</h1>
-        <div *ngFor="let com of commentsList">
-            <div fxLayout="row" fxLayoutAlign="start">
-                <button *ngIf="loggedUser?.role=='admin'" mat-button (click)="openDeleteModal(com._id)">
-                      <mat-icon>delete</mat-icon>
-                </button>
-                <p style="margin-top: 9px;">&nbsp;&nbsp;&nbsp;&nbsp; {{com.description}} </p>
-            </div>           
-        </div>       
-    </div>
 
     <div class="review-leave">
-        <h1>Ler nje koment</h1>
-        <mat-form-field style="width: 1180px;" >
-            <textarea matInput [(ngModel)]="itemValue"></textarea>
-        </mat-form-field>
-        <br>
-        <button mat-button (click)="saveComment(itemValue)">
-            Ruaj komentin
-        </button>
+        <h1>Shkruaj një koment</h1>
+        <div *ngIf="loggedUser?.username; else noLogin">
+            <mat-form-field style="width: 1180px;">
+                <textarea matInput [(ngModel)]="itemValue"></textarea>
+            </mat-form-field>
+            <br>
+            <button mat-button (click)="saveComment(itemValue)">
+                Ruaj komentin
+            </button>
+        </div>
+        <ng-template #noLogin>
+            <h3>Hyr në llogari për të lënë një koment </h3><mat-icon> sentiment_satisfied_alt</mat-icon>
+        </ng-template>
     </div>
+
+
+    <div class="review-show">
+        <!--<h1>Komente</h1>
+         <div *ngFor="let com of commentsList">
+            <div fxLayout="row" fxLayoutAlign="start">
+                <div
+                    style="flex-direction: row; box-sizing: border-box; display: flex; place-content: center flex-start; align-items: center; flex: 1 1 0%;">
+                    <button *ngIf="loggedUser?.role=='admin' || loggedUser?.username===com.username" mat-button
+                        (click)="openDeleteModal(com._id)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                    <p style="margin-top: 9px;">-&nbsp;&nbsp;&nbsp;&nbsp; {{com.description}} </p>
+                </div>
+            </div>
+        </div> -->
+
+        <mat-accordion>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title class="comment-title">
+                       {{commentsList?.length}}&nbsp;&nbsp; Komente 
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div *ngFor="let com of commentsList" class="comment-container">
+                    <div fxLayout="row" fxLayoutAlign="start">
+                        <div style="flex-direction: row; box-sizing: border-box; display: flex; place-content: center flex-start; align-items: center; flex: 1 1 0%;">   
+                          
+                            <p class="comment-username">{{com?.username}}:</p>
+                            <p class="comment-text">&nbsp;&nbsp;&nbsp;&nbsp; {{com.description}} </p>
+                            
+                            <button *ngIf="loggedUser?.role=='admin' || loggedUser?.username===com.username" mat-button
+                                (click)="openDeleteModal(com._id)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+    <br><br>
 </div>

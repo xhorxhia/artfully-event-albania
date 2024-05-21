@@ -27,7 +27,7 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
-import { ConfirmationDialog } from './confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialog } from './shared/confirmation-dialog/confirmation-dialog.component';
 import { SpecificEventComponent } from './specific-event/specific-event.component';
 import { IvyCarouselModule } from 'angular-responsive-carousel';
 import { CommentSectionComponent } from './specific-event/comment-section/comment-section.component';
@@ -37,6 +37,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FejesaKonfetaComponent } from './confetti/fejesa-konfeta/fejesa-konfeta.component';
 import { EditEventModalComponent } from './shared/edit-event-modal/edit-event-modal.component';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { SharedModule } from './shared/shared.module';
 
 
 
@@ -67,6 +69,7 @@ import { EditEventModalComponent } from './shared/edit-event-modal/edit-event-mo
     
   ],
   imports: [
+    SharedModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
@@ -87,7 +90,8 @@ import { EditEventModalComponent } from './shared/edit-event-modal/edit-event-mo
     IvyCarouselModule,
     MatSnackBarModule,
     MatTooltipModule,
-    FormsModule
+    FormsModule,
+    MatExpansionModule
   ],
   providers: [EventService, EventsService],
   bootstrap: [AppComponent]

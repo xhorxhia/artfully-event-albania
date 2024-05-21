@@ -2,21 +2,17 @@
     
     <img  class="images" src="../../assets/logos/logo1.png" height="100px" width="90px"/>
    
-    <span>&nbsp;{{title | uppercase}}</span>
-    <span class="example-spacer"></span>
-    <button mat-button (click)="goToPage('kreu')">Kreu</button>
-    <button mat-button (click)="goToPage('evente')">Evente</button>
-    <button mat-button (click)="goToPage('konfeta')">Konfeta</button>
-    <button mat-button (click)="goToPage('kontakt')">Kontakt</button>
+    <span style="font-size: 30px;">&nbsp;{{title | uppercase}}</span>
 
-    <button mat-icon-button
-            *ngIf="loginState"
-            class="text-light"
-            matTooltipPosition="below"
-           > <!-- routerLink="/myprofile"-->
-      <mat-icon>person</mat-icon>
-    </button>
-    <span *ngIf="loginState" class="text-light">Mireserdhe {{userName}}</span>
+    <span class="example-spacer"></span>
+
+    <button mat-button (click)="goToPage('kreu')" class="titltes">Kreu</button>
+    <button mat-button (click)="goToPage('evente')" class="titltes">Evente</button>
+    <button mat-button (click)="goToPage('konfeta')" class="titltes">Konfeta</button>
+    <button mat-button (click)="goToPage('kontakt')" class="titltes">Kontakt</button>
+
+    <span *ngIf="loginState" class="text-light">&nbsp;&nbsp;&nbsp;Mireserdhe {{userName}}</span>
+    
     <button mat-icon-button
             *ngIf="!loginState"
             (click)="auth_btnClicked()"
@@ -24,7 +20,7 @@
             class="text-light"
             matTooltip="Login"
             matTooltipPosition="below">
-      <mat-icon>login</mat-icon>
+      <mat-icon>person_outline</mat-icon>
     </button>
     <button mat-icon-button
             *ngIf="loginState"
@@ -32,7 +28,7 @@
             class="text-light"
             matTooltip="Logout"
             matTooltipPosition="below">
-      <mat-icon>logout</mat-icon>
+      <mat-icon>person</mat-icon>
     </button>
   </mat-toolbar>
   

@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { EventService } from 'src/event.service';
 import { EventsService } from './events.service';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-events',
@@ -20,11 +21,18 @@ export class EventsComponent implements OnInit{
  fileToUpload: File | null = null;
  imagesToUpload: any  = [];
 
+ promptConfig: MatSnackBarConfig = {
+  horizontalPosition: 'center',
+  verticalPosition: 'top',
+  duration: 2 * 1000
+}
+
   constructor(private router: Router,
               private eventService: EventService,
               private eventsService: EventsService,
               private dialog: MatDialog,
-              private fb: FormBuilder,){
+              private fb: FormBuilder,
+              private _snackBar: MatSnackBar, ){
                
                 this.addGeneralEventForm = fb.group({
                   'name': [null, Validators.required],
@@ -119,13 +127,15 @@ export class EventsComponent implements OnInit{
        
       try {
         this.eventsService.addNewEvent(formData).subscribe(resp =>{
-
+          this._snackBar.open('New event added  \u2714 😀','', this.promptConfig);
         });
       } catch (error) {
           console.error("Error adding file")
+          this._snackBar.open('Error adding file.', 'OK', this.promptConfig);
       }
     } else {
       console.error('No file selected');
+      this._snackBar.open('No file selected', 'OK', this.promptConfig);
     }
 
    console.log(this.newEvent);

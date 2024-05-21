@@ -72,6 +72,18 @@
             </mat-form-field>
         </div>
         <br>
+        <div>
+            <mat-label>Fotoja e coverit</mat-label>
+            <input formControlName="profileImgUrl" #fileInput type="file" (change)="handleProfileImageInput($event)"
+                accept="image/*">
+        </div>
+        <br>
+        <div>
+            <mat-label>Fotot per eventin</mat-label>
+            <input formControlName="eventImages" type="file" #fileInput multiple (change)="handleMultipleImageInput($event)"
+                accept="image/*">
+        </div>
+        <br>
         <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="space-between center">
             <div fxFlexFill fxFlex="100">
                 <button mat-flat-button color="primary" type="submit" style="float: right">Ruaj</button>
@@ -81,4 +93,3 @@
     </form>
 
 </ng-template>
-

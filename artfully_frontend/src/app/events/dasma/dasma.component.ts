@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
-import { ConfirmationDialog } from 'src/app/confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialog } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 import { EventService } from 'src/event.service';
 import { EventsService } from '../events.service';
 import { EditEventModalComponent } from 'src/app/shared/edit-event-modal/edit-event-modal.component';

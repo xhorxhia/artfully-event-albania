@@ -9,3 +9,13 @@
     background-color: #d4c5b6; 
     color: #4d4438e5;
 }
+
+.titltes {
+  font-size: medium;
+  font-weight: 800;
+}
+
+
+.text-light {
+  font-style: oblique;
+}

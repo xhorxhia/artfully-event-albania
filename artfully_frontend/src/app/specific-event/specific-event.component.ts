@@ -3,7 +3,7 @@ import { EventService } from 'src/event.service';
 import { Location } from '@angular/common';
 import { EventsService } from '../events/events.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationDialog } from '../confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialog } from '../shared/confirmation-dialog/confirmation-dialog.component';
 import { Subject } from 'rxjs';
 
 @Component({
